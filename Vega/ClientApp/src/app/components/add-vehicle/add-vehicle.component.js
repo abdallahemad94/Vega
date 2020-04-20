@@ -11,26 +11,22 @@ var Vehicle_1 = require("../../models/Vehicle");
 var AddVehicleComponent = /** @class */ (function () {
     function AddVehicleComponent(vehicalsService) {
         this.vehicalsService = vehicalsService;
+        this.makes = [];
+        this.vehicle = new Vehicle_1.Vehicle();
         this.features = [];
+        this.subscribtions = [];
     }
     AddVehicleComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.subscribtion = this.vehicalsService.getMakes().subscribe(function (result) { return _this.makes = result; }, function (error) { return console.log(error); });
-        this.vehicle = new Vehicle_1.Vehicle();
-        console.log(this.makes);
-        this.createFeatures();
+        var makesSubscribtion = this.vehicalsService.getMakes().subscribe(function (result) { return _this.makes = result; }, function (error) { return console.error(error); });
+        var featuresSubscribtion = this.vehicalsService.getFeatures().subscribe(function (result) { return _this.features = result; }, function (error) { return console.error(error); });
+        this.subscribtions.push(makesSubscribtion);
+        this.subscribtions.push(featuresSubscribtion);
     };
     AddVehicleComponent.prototype.ngOnDestroy = function () {
-        this.subscribtion.unsubscribe();
-    };
-    AddVehicleComponent.prototype.createFeatures = function () {
-        for (var _i = 0, _a = [0, 1, 2, 3, 4, 5, 6]; _i < _a.length; _i++) {
-            var i = _a[_i];
-            this.features.push({ id: i, name: "feature" + i, selected: i % 2 == 0 });
-        }
+        this.subscribtions.forEach(function (subscribtion) { return subscribtion.unsubscribe(); });
     };
     AddVehicleComponent.prototype.OnSubmit = function (form) {
-        console.log(form.controls['make'].valid);
         this.vehicalsService.addVehicle(this.vehicle);
     };
     AddVehicleComponent = __decorate([

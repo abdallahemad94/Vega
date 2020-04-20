@@ -5,6 +5,7 @@ import { Vehicle } from '../../models/Vehicle';
 import { NgForm } from "@angular/forms";
 import { Feature } from "../../models/Feature";
 import { Subscription } from "rxjs";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: 'add-vehicle',
@@ -12,33 +13,34 @@ import { Subscription } from "rxjs";
   styleUrls: ['./add-vehicle.component.css']
 })
 export class AddVehicleComponent implements OnInit, OnDestroy {
-  public makes: Make[];
-  public vehicle: Vehicle;
+  public makes: Make[] = [];
+  public vehicle: Vehicle = new Vehicle();
   public features: Feature[] = [];
-  private subscribtion: Subscription;
+  private subscribtions: Subscription[] = [];
 
   constructor(private vehicalsService: VehicalsService) { }
 
   ngOnInit() {
-    this.subscribtion = this.vehicalsService.getMakes().subscribe(
+    let makesSubscribtion = this.vehicalsService.getMakes().subscribe(
       (result: Make[]) => this.makes = result,
-      error => console.log(error)
+      (error: HttpErrorResponse) => console.error(error)
     );
-    this.vehicle = new Vehicle(); console.log(this.makes);
-    this.createFeatures();
+
+    let featuresSubscribtion = this.vehicalsService.getFeatures().subscribe(
+      (result: Feature[]) => this.features = result,
+      (error: HttpErrorResponse) => console.error(error)
+    );
+
+    this.subscribtions.push(makesSubscribtion);
+    this.subscribtions.push(featuresSubscribtion);
+
   }
 
   ngOnDestroy() {
-    this.subscribtion.unsubscribe();
-  }
-
-  createFeatures() {
-    for (let i of [0, 1, 2, 3, 4, 5, 6])
-      this.features.push({ id: i, name: "feature" + i, selected: i % 2 == 0 });
+    this.subscribtions.forEach(subscribtion => subscribtion.unsubscribe());
   }
 
   OnSubmit(form: NgForm): void {
-    console.log(form.controls['make'].valid);
     this.vehicalsService.addVehicle(this.vehicle);
   }
 }

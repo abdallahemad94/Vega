@@ -16,10 +16,13 @@ var VehicalsService = /** @class */ (function () {
         this.baseUrl = baseUrl;
     }
     VehicalsService.prototype.getMakes = function () {
-        return this.http.get(this.baseUrl + 'api/makes');
+        return this.http.get(this.baseUrl + 'api/vehicles/get/makes');
+    };
+    VehicalsService.prototype.getFeatures = function () {
+        return this.http.get(this.baseUrl + 'api/vehicles/get/features');
     };
     VehicalsService.prototype.addVehicle = function (vehicle) {
-        this.http.post(this.baseUrl + "/api/add/vehicle", vehicle).subscribe(function (success) { return console.log(success); }, function (error) { return console.log(error); });
+        this.http.post(this.baseUrl + "api/vehicles/add", vehicle).subscribe(function (success) { return console.log(success); }, function (error) { return console.error(error); });
     };
     VehicalsService = __decorate([
         core_1.Injectable(),

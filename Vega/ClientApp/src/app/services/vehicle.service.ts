@@ -3,6 +3,7 @@ import { Inject, Injectable } from "@angular/core";
 import { Make } from "../models/Make";
 import { Observable } from "rxjs";
 import { Vehicle } from "../models/Vehicle";
+import { Feature } from "../models/Feature";
 
 @Injectable()
 export class VehicalsService {
@@ -10,13 +11,17 @@ export class VehicalsService {
 
   getMakes(): Observable<Make[]>
   {
-    return this.http.get<Make[]>(this.baseUrl + 'api/makes');
+    return this.http.get<Make[]>(this.baseUrl + 'api/vehicles/get/makes');
+  }
+  getFeatures(): Observable<Feature[]> {
+    return this.http.get<Feature[]>(this.baseUrl + 'api/vehicles/get/features');
   }
 
   addVehicle(vehicle: Vehicle): void {
-    this.http.post<Vehicle>(this.baseUrl + "/api/add/vehicle", vehicle).subscribe(
+    this.http.post<Vehicle>(this.baseUrl + "api/vehicles/add", vehicle).subscribe(
       success => console.log(success),
-      error => console.log(error)
+      error => console.error(error)
     );
   }
+
 }

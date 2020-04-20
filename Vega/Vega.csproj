@@ -41,9 +41,6 @@
     <None Remove="ClientApp\src\app\models\Vehicle.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-  <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\add-vehicle\add-vehicle.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\Feature.ts" />
@@ -79,6 +76,50 @@
     </ItemGroup>
   </Target>
   <ItemGroup>
-    <None Include="ClientApp/node_modules/**" />
+    <Compile Remove="Migrations\20200417220310_VegaDB.cs" />
+    <Compile Remove="Migrations\20200417220310_VegaDB.Designer.cs" />
+    <Compile Remove="Migrations\20200417223351_refrences.cs" />
+    <Compile Remove="Migrations\20200417223351_refrences.Designer.cs" />
+    <Compile Remove="Migrations\20200417230955_update VegaDB.cs" />
+    <Compile Remove="Migrations\20200417230955_update VegaDB.Designer.cs" />
+    <Compile Remove="Migrations\20200419115723_features.cs" />
+    <Compile Remove="Migrations\20200419115723_features.Designer.cs" />
+    <Compile Remove="Migrations\20200419123646_vehicle-features.cs" />
+    <Compile Remove="Migrations\20200419123646_vehicle-features.Designer.cs" />
+    <Compile Remove="Migrations\20200419124112_vehicle1-features1.cs" />
+    <Compile Remove="Migrations\20200419124112_vehicle1-features1.Designer.cs" />
+    <Compile Remove="Migrations\20200419124433_vehicles.cs" />
+    <Compile Remove="Migrations\20200419124433_vehicles.Designer.cs" />
+    <Compile Remove="Migrations\20200419124709_vehicles1.cs" />
+    <Compile Remove="Migrations\20200419124709_vehicles1.Designer.cs" />
+    <Compile Remove="Migrations\20200419125307_vehicles11.cs" />
+    <Compile Remove="Migrations\20200419125307_vehicles11.Designer.cs" />
+    <Compile Remove="Migrations\20200419125752_vehicles111.cs" />
+    <Compile Remove="Migrations\20200419125752_vehicles111.Designer.cs" />
+    <Compile Remove="Migrations\20200419130406_vehicles1111.cs" />
+    <Compile Remove="Migrations\20200419130406_vehicles1111.Designer.cs" />
+    <Compile Remove="Migrations\20200419130932_vehicles-features.cs" />
+    <Compile Remove="Migrations\20200419130932_vehicles-features.Designer.cs" />
+    <Compile Remove="Migrations\20200419131054_vehicles-features.cs" />
+    <Compile Remove="Migrations\20200419131054_vehicles-features.Designer.cs" />
+    <Compile Remove="Migrations\20200419152118_vehicles-features1.cs" />
+    <Compile Remove="Migrations\20200419152118_vehicles-features1.Designer.cs" />
+    <Compile Remove="Migrations\20200419173321_a.cs" />
+    <Compile Remove="Migrations\20200419173321_a.Designer.cs" />
+    <Compile Remove="Migrations\20200419173631_a.cs" />
+    <Compile Remove="Migrations\20200419173631_a.Designer.cs" />
+    <Compile Remove="Migrations\20200419214538_VegaDB1.cs" />
+    <Compile Remove="Migrations\20200419214538_VegaDB1.Designer.cs" />
+    <Compile Remove="Migrations\20200420085707_VegaDB1.cs" />
+    <Compile Remove="Migrations\20200420085707_VegaDB1.Designer.cs" />
+    <Compile Remove="Migrations\20200420090542_VegaDB1.cs" />
+    <Compile Remove="Migrations\20200420090542_VegaDB1.Designer.cs" />
+    <Compile Remove="Migrations\20200420135823_VegaDB.cs" />
+    <Compile Remove="Migrations\20200420135823_VegaDB.Designer.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="node_modules\Bootstrap\**" />
+  </ItemGroup>
+
+  
 </Project>

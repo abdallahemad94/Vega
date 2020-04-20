@@ -42,7 +42,7 @@
           <label class="text-info">Registered</label>
         </div>
         <div class="form-row">
-          <div class="custom-control custom-radio custom-control-inline">
+          <div class="custom-control custom-radio custom-control-inline radio">
             <input id="NotRegistered" class="custom-control-input" type="radio" name="isRegistered" [value]="false" [(ngModel)]="vehicle.isRegistered" />
             <label class="custom-control-label" for="NotRegistered">No</label>
           </div>
@@ -54,13 +54,12 @@
         <div class="form-row">
           <div class="col-sm-12 col-md-12">
             <label class="text-info" style="display:block;">Features</label>
-            <div class="custom-control custom-checkbox custom-control-inline" *ngFor="let feature of features" ngModelGroup="features">
+            <div class="custom-control custom-checkbox checkbox custom-control-inline" *ngFor="let feature of features" ngModelGroup="features">
               <input class="custom-control-input"
                      type="checkbox"
                      [id]="feature.name"
                      name="features"
-                     [value]="feature"
-                     [checked]="feature.selected"
+                     [value]="feature.Id"
                      ngModel />
               <label class="custom-control-label" [for]="feature.name">{{feature.name}}</label>
             </div>
