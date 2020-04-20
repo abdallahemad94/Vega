@@ -6,6 +6,7 @@ import { NgForm } from "@angular/forms";
 import { Feature } from "../../models/Feature";
 import { Subscription } from "rxjs";
 import { HttpErrorResponse } from "@angular/common/http";
+import { forEach } from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'add-vehicle',
@@ -16,6 +17,7 @@ export class AddVehicleComponent implements OnInit, OnDestroy {
   public makes: Make[] = [];
   public vehicle: Vehicle = new Vehicle();
   public features: Feature[] = [];
+  public selectedMake: Make;
   private subscribtions: Subscription[] = [];
 
   constructor(private vehicalsService: VehicalsService) { }
@@ -41,7 +43,17 @@ export class AddVehicleComponent implements OnInit, OnDestroy {
   }
 
   OnSubmit(form: NgForm): void {
+    this.features.forEach(f => {
+      if (form.value.features[f.name])
+        this.vehicle.features.push(f.id);
+      });
     this.vehicalsService.addVehicle(this.vehicle);
+  }
+
+  clearControls(form: NgForm) {
+    form.reset();
+    this.selectedMake = undefined;
+    this.vehicle = new Vehicle();
   }
 }
 

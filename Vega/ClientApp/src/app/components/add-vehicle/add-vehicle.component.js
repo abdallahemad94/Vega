@@ -27,7 +27,17 @@ var AddVehicleComponent = /** @class */ (function () {
         this.subscribtions.forEach(function (subscribtion) { return subscribtion.unsubscribe(); });
     };
     AddVehicleComponent.prototype.OnSubmit = function (form) {
+        var _this = this;
+        this.features.forEach(function (f) {
+            if (form.value.features[f.name])
+                _this.vehicle.features.push(f.id);
+        });
         this.vehicalsService.addVehicle(this.vehicle);
+    };
+    AddVehicleComponent.prototype.clearControls = function (form) {
+        form.reset();
+        this.selectedMake = undefined;
+        this.vehicle = new Vehicle_1.Vehicle();
     };
     AddVehicleComponent = __decorate([
         core_1.Component({

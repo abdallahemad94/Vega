@@ -5,9 +5,7 @@ var Vehicle = /** @class */ (function () {
         this.id = 0;
         this.isRegistered = false;
         this.features = [];
-        this.contactName = "";
-        this.contactPhone = "";
-        this.contactEmail = "";
+        this.contactInfo = { name: "", phone: "", email: "" };
     }
     return Vehicle;
 }());

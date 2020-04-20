@@ -30,7 +30,18 @@ namespace Vega.Common
                 .ForMember(dest => dest.ContactName, opt => opt.MapFrom(src => src.ContactInfo.Name))
                 .ForMember(dest => dest.ContactPhone, opt => opt.MapFrom(src => src.ContactInfo.Phone))
                 .ForMember(dest => dest.ContactEmail, opt => opt.MapFrom(src => src.ContactInfo.Email))
-                .ForMember(dest => dest.Features, opt => opt.MapFrom(src => src.Features.Select(id => new VehicleFeature() { FeatureId = id })));
+                .ForMember(dest => dest.Features, opt => opt.Ignore())
+                .AfterMap((vehicleViewModel, vehicle) => {
+                    //Remove unselected features
+                    var removedFeatures = vehicle.Features.Where(f => !vehicleViewModel.Features.Contains(f.FeatureId)).ToList();
+                    foreach (var f in removedFeatures)
+                        vehicle.Features.Remove(f);
+
+                    //add new features
+                    var addedFeatures = vehicleViewModel.Features.Where(id => !vehicle.Features.Any(f => f.FeatureId == id)).Select(id => new VehicleFeature() { FeatureId = id });
+                    foreach (var f in addedFeatures)
+                            vehicle.Features.Add(f);
+                });
 
             CreateMap<Vehicle, VehicleViewModel>()
                 .ForMember(dest => dest.ContactInfo, opt => opt.MapFrom(src => new ContactViewodel() { Name = src.ContactName, Email = src.ContactEmail, Phone = src.ContactPhone } ))

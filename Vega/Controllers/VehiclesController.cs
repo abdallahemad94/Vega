@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.Dynamic;
 using System.Net;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace Vega.Controllers
 {
@@ -45,15 +46,13 @@ namespace Vega.Controllers
         [HttpGet("get/all")]
         public async Task<IActionResult> GetVehiclesAsync()
         {
-            return Ok(await DbContext.Vehicles.Include(v => v.Features.Select(f => f.Feature)).ProjectTo<VehicleViewModel>(Mapper.ConfigurationProvider).ToListAsync());
+            return Ok(await DbContext.Vehicles.Include(v => v.Features).ProjectTo<VehicleViewModel>(Mapper.ConfigurationProvider).ToListAsync());
         }
 
         [HttpGet("get/{id}")]
         public async Task<IActionResult> GetVehicleByIdAsync([FromRoute]int id)
         {
-            Vehicle vehicle = await DbContext.Vehicles
-                .Include(v => v.Model)
-                .FirstOrDefaultAsync(v => v.Id == id);
+            Vehicle vehicle = await DbContext.Vehicles.Include(v => v.Features).SingleOrDefaultAsync(v => v.Id == id);
             if (vehicle == default || vehicle == null)
                 return NotFound("Vehicle not found");
             return Ok(Mapper.Map<Vehicle, VehicleViewModel>(vehicle));
@@ -81,11 +80,11 @@ namespace Vega.Controllers
             if(id <= 0 )
                 return BadRequest("Id must be greater than 0");
 
-            Vehicle vehicle = await DbContext.Vehicles.FindAsync(id);
+            Vehicle vehicle = await DbContext.Vehicles.Include(v => v.Features).Where(v => v.Id == id).FirstAsync();
             if (vehicle == null)
                 return NotFound($"Vehicle with id = {id} not found");
-
             Mapper.Map<VehicleViewModel, Vehicle>(vehicleViewModel, vehicle);
+            
             await DbContext.SaveChangesAsync();
 
             return Ok(Mapper.Map<Vehicle, VehicleViewModel>(vehicle));

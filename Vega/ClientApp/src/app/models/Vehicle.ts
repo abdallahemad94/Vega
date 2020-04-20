@@ -4,11 +4,8 @@ import { Feature } from "./Feature";
 
 export class Vehicle {
   id: number = 0;
-  make: Make;
-  model: Model;
+  modelId: number;
   isRegistered: boolean = false;
-  features: Feature[] = [];
-  contactName: string = "";
-  contactPhone: string = "";
-  contactEmail: string = "";
+  features: number[] = [];
+  contactInfo: any = { name: "", phone: "", email: "" }
 }

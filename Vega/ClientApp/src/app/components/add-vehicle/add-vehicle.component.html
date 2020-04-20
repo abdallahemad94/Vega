@@ -14,8 +14,8 @@
                   class="custom-select custom-select-sm"
                   [ngClass]="make.touched ? make.valid ? 'is-valid' : 'is-invalid' : ''"
                   name="make"
-                  [(ngModel)]="vehicle.make"
-                  (change)="vehicle.model = undefined"
+                  [(ngModel)]="selectedMake"
+                  (change)="vehicle.modelId = undefined"
                   required
                   #make="ngModel">
             <option class="dropdown-header" [ngValue]="undefined" selected>please Select...</option>
@@ -28,11 +28,11 @@
                   class="custom-select custom-select-sm"
                   [ngClass]="model.touched ? model.valid ? 'is-valid' : 'is-invalid' : ''"
                   name="model"
-                  [(ngModel)]="vehicle.model"
+                  [(ngModel)]="vehicle.modelId"
                   required
                   #model="ngModel">
             <option class="dropdown-header" [ngValue]="undefined" selected>please Select...</option>
-            <option *ngFor="let m of vehicle.make?.models" [ngValue]="m">{{ m.name }}</option>
+            <option *ngFor="let m of selectedMake?.models" [ngValue]="m.id">{{ m.name }}</option>
           </select>
         </div>
       </div>
@@ -58,7 +58,7 @@
               <input class="custom-control-input"
                      type="checkbox"
                      [id]="feature.name"
-                     name="features"
+                     [name]="feature.name"
                      [value]="feature.Id"
                      ngModel />
               <label class="custom-control-label" [for]="feature.name">{{feature.name}}</label>
@@ -82,7 +82,7 @@
                    type="text"
                    value=""
                    placeholder="Jhon Doe"
-                   [(ngModel)]="vehicle.contactName"
+                   [(ngModel)]="vehicle.contactInfo.name"
                    name="contactName"
                    required
                    #cName="ngModel" />
@@ -96,7 +96,7 @@
                    value=""
                    placeholder="+0123456789"
                    name="contactPhone"
-                   [(ngModel)]="vehicle.contactPhone"
+                   [(ngModel)]="vehicle.contactInfo.phone"
                    required
                    #cPhone="ngModel" />
           </div>
@@ -111,7 +111,7 @@
                    value=""
                    placeholder="someone@something.com"
                    name="contactEmail"
-                   [(ngModel)]="vehicle.contactEmail"
+                   [(ngModel)]="vehicle.contactInfo.email"
                    required
                    #cEmail="ngModel" />
           </div>
@@ -120,10 +120,10 @@
     </div>
     <div class="form-row">
       <div class="col-sm-2 col-md-2">
-        <button type="submit" class="btn btn-primary form-control" [disabled]="form.invalid">Submit</button>
+        <button type="submit" class="btn btn-primary form-control" [disabled]="false">Submit</button>
       </div>
       <div class="col-sm-2 col-md-2">
-        <button type="reset" class="btn btn-secondary form-control">Clear</button>
+        <button type="button" class="btn btn-secondary form-control" (click)="clearControls(form)">Clear</button>
       </div>
     </div>
   </div>
