@@ -7,24 +7,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var Vehicle_1 = require("../../models/Vehicle");
+var SaveVehicle_1 = require("../../models/SaveVehicle");
 var AddVehicleComponent = /** @class */ (function () {
-    function AddVehicleComponent(vehicalsService) {
-        this.vehicalsService = vehicalsService;
+    function AddVehicleComponent(vehiclesService, route) {
+        this.vehiclesService = vehiclesService;
+        this.route = route;
         this.makes = [];
-        this.vehicle = new Vehicle_1.Vehicle();
         this.features = [];
-        this.subscribtions = [];
+        this.vehicle = new SaveVehicle_1.SaveVehicle();
+        this.subscriptions = [];
+        this.isEditMode = false;
+        this.vehicleId = 0;
     }
     AddVehicleComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var makesSubscribtion = this.vehicalsService.getMakes().subscribe(function (result) { return _this.makes = result; }, function (error) { return console.error(error); });
-        var featuresSubscribtion = this.vehicalsService.getFeatures().subscribe(function (result) { return _this.features = result; }, function (error) { return console.error(error); });
-        this.subscribtions.push(makesSubscribtion);
-        this.subscribtions.push(featuresSubscribtion);
+        var makesSubscription = this.vehiclesService.getMakes().subscribe(function (result) { return _this.makes = result; }, function (error) { return console.error(error); });
+        var featuresSubscription = this.vehiclesService.getFeatures().subscribe(function (result) { return _this.features = result; }, function (error) { return console.error(error); });
+        var routeSubscription = this.route.params.subscribe(function (params) {
+            if (params["id"]) {
+                _this.vehicleId = +params["id"];
+                _this.isEditMode = true;
+            }
+        });
+        if (this.isEditMode)
+            this.loadVehicle();
+        this.subscriptions.push(makesSubscription);
+        this.subscriptions.push(featuresSubscription);
+        this.subscriptions.push(routeSubscription);
     };
     AddVehicleComponent.prototype.ngOnDestroy = function () {
-        this.subscribtions.forEach(function (subscribtion) { return subscribtion.unsubscribe(); });
+        this.subscriptions.forEach(function (subscription) { return subscription.unsubscribe(); });
     };
     AddVehicleComponent.prototype.OnSubmit = function (form) {
         var _this = this;
@@ -32,16 +44,27 @@ var AddVehicleComponent = /** @class */ (function () {
             if (form.value.features[f.name])
                 _this.vehicle.features.push(f.id);
         });
-        this.vehicalsService.addVehicle(this.vehicle);
+        console.log(this.vehicle);
+        //this.vehiclesService.addVehicle(this.vehicle);
     };
     AddVehicleComponent.prototype.clearControls = function (form) {
         form.reset();
         this.selectedMake = undefined;
-        this.vehicle = new Vehicle_1.Vehicle();
+        this.vehicle = new SaveVehicle_1.SaveVehicle();
+    };
+    AddVehicleComponent.prototype.loadVehicle = function () {
+        var _this = this;
+        this.vehiclesService.getVehicle(this.vehicleId).subscribe(function (result) {
+            _this.vehicle.id = result.id;
+            _this.vehicle.isRegistered = result.isRegistered;
+            _this.vehicle.modelId = result.model.id;
+            _this.vehicle.contactInfo = result.contactInfo;
+            result.features.forEach(function (f) { return _this.vehicle.features.push(f.id); });
+        });
     };
     AddVehicleComponent = __decorate([
         core_1.Component({
-            selector: 'add-vehicle',
+            selector: "add-vehicle",
             templateUrl: './add-vehicle.component.html',
             styleUrls: ['./add-vehicle.component.css']
         })

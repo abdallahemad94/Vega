@@ -1,59 +1,107 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { VehicalsService } from '../../services/vehicle.service';
+import { VehiclesService } from '../../services/vehicle.service';
 import { Make } from '../../models/Make';
-import { Vehicle } from '../../models/Vehicle';
 import { NgForm } from "@angular/forms";
 import { Feature } from "../../models/Feature";
-import { Subscription } from "rxjs";
-import { HttpErrorResponse } from "@angular/common/http";
-import { forEach } from "@angular/router/src/utils/collection";
+import { Subscription, Observable } from "rxjs";
+import { SaveVehicle } from "../../models/SaveVehicle";
+import { ActivatedRoute } from "@angular/router";
+import "rxjs/add/observable/forkJoin";
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
-  selector: 'add-vehicle',
+  selector: "add-vehicle",
   templateUrl: './add-vehicle.component.html',
   styleUrls: ['./add-vehicle.component.css']
 })
 export class AddVehicleComponent implements OnInit, OnDestroy {
   public makes: Make[] = [];
-  public vehicle: Vehicle = new Vehicle();
   public features: Feature[] = [];
+  public vehicle: SaveVehicle = new SaveVehicle();
   public selectedMake: Make;
-  private subscribtions: Subscription[] = [];
+  private subscriptions: Subscription[] = [];
+  private isEditMode: boolean = false;
+  private vehicleId: number = 0; 
+  private markedFeatures: {} = {};
 
-  constructor(private vehicalsService: VehicalsService) { }
+  constructor(private readonly vehiclesService: VehiclesService, private route: ActivatedRoute)
+  {
+    this.route.params.subscribe(params => {
+      if (params["id"] && !isNaN(params["id"])) {
+        this.vehicleId = +params["id"];
+        this.isEditMode = true;
+      }
+    });
+  }
 
   ngOnInit() {
-    let makesSubscribtion = this.vehicalsService.getMakes().subscribe(
-      (result: Make[]) => this.makes = result,
-      (error: HttpErrorResponse) => console.error(error)
-    );
+    const sources: any[] = [
+      this.vehiclesService.getMakes(),
+      this.vehiclesService.getFeatures()
+    ];
 
-    let featuresSubscribtion = this.vehicalsService.getFeatures().subscribe(
-      (result: Feature[]) => this.features = result,
-      (error: HttpErrorResponse) => console.error(error)
-    );
+    if (this.isEditMode)
+      sources.push(this.vehiclesService.getVehicle(this.vehicleId));
 
-    this.subscribtions.push(makesSubscribtion);
-    this.subscribtions.push(featuresSubscribtion);
+    const subscription = Observable.forkJoin(sources).subscribe(
+      ([makes, features, vehicle]) => {
+        this.makes = makes;
+        this.features = features;
+        this.features.forEach(f => this.markedFeatures[f.id] = false);
+        if (this.isEditMode && vehicle)
+          this.loadVehicle(vehicle);
+      });
 
+    this.subscriptions.push(subscription);
   }
 
   ngOnDestroy() {
-    this.subscribtions.forEach(subscribtion => subscribtion.unsubscribe());
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   OnSubmit(form: NgForm): void {
+    this.vehicle.features = [];
     this.features.forEach(f => {
-      if (form.value.features[f.name])
-        this.vehicle.features.push(f.id);
-      });
-    this.vehicalsService.addVehicle(this.vehicle);
+      if (this.markedFeatures[f.id])
+        this.vehicle.features.push( f.id );
+    });
+    if (this.isEditMode)
+      this.vehiclesService.updateVehicle(this.vehicle);
+    else
+      this.vehiclesService.addVehicle(this.vehicle);
   }
 
   clearControls(form: NgForm) {
     form.reset();
     this.selectedMake = undefined;
-    this.vehicle = new Vehicle();
+    this.vehicle = new SaveVehicle();
+    this.markedFeatures = {};
+  }
+
+  loadVehicle(vehicle) {
+    this.vehicle.id = vehicle.id;
+    this.vehicle.isRegistered = vehicle.isRegistered;
+    this.vehicle.modelId = vehicle.model.id;
+    this.vehicle.contactInfo = vehicle.contactInfo;
+    vehicle.features.forEach(f => this.markedFeatures[f.id] = true);
+    this.selectedMake = this.makes.find(m => m.id == vehicle.make.id);
+  }
+
+  OnDelete(id: number) {
+    this.vehiclesService.deleteVehicle(id);
+  }
+
+  opensweetalert(id: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Once deleted you can't get it back.",
+      icon: 'warning',
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonColor: "#d33",
+      confirmButtonText: "Delete"
+    }).then(result => { if (result.value) this.OnDelete(id) });
   }
 }
 

@@ -4,8 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Vega.Models;
+using Vega.Common;
 
 namespace Vega.Migrations
 {
@@ -86,10 +85,9 @@ namespace Vega.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
-                    b.Property<bool>("IsRegestired");
+                    b.Property<bool>("IsRegistered");
 
-                    b.Property<DateTime?>("LastUpdated")
-                        .IsRequired()
+                    b.Property<DateTime>("LastUpdated")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GETDATE()");
 

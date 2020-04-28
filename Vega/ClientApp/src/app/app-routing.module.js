@@ -10,9 +10,17 @@ var router_1 = require("@angular/router");
 var core_1 = require("@angular/core");
 var home_component_1 = require("./components/home/home.component");
 var add_vehicle_component_1 = require("./components/add-vehicle/add-vehicle.component");
+var vehicles_list_component_1 = require("./components/vehicles-list/vehicles-list.component");
 var routs = [
-    { path: '', component: home_component_1.HomeComponent, pathMatch: 'full' },
-    { path: 'add-vehicle', component: add_vehicle_component_1.AddVehicleComponent },
+    { path: '', redirectTo: "vehicles", pathMatch: 'full' },
+    {
+        path: 'vehicles', component: home_component_1.HomeComponent,
+        children: [
+            { path: "", component: vehicles_list_component_1.VehiclesListComponent },
+            { path: "new", component: add_vehicle_component_1.AddVehicleComponent },
+            { path: ":id", component: add_vehicle_component_1.AddVehicleComponent }
+        ]
+    },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {

@@ -1,9 +1,10 @@
 {
-  "name": "Vega",
+  "name": "vega",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "prod": "ng serve --prod",
     "build": "ng build",
     "build:ssr": "ng run Vega:server:dev",
     "test": "ng test",
@@ -24,14 +25,25 @@
     "@angular/platform-server": "6.1.10",
     "@angular/router": "6.1.10",
     "@nguniversal/module-map-ngfactory-loader": "6.0.0",
+    "@sentry/browser": "^5.15.5",
+    "@sweetalert2/ngx-sweetalert2": "^8.1.0",
+    "@types/datatables.net": "^1.10.19",
+    "@types/jquery": "^3.3.35",
+    "@types/underscore": "^1.9.4",
+    "angular-datatables": "^9.0.1",
     "aspnet-prerendering": "^3.0.1",
     "bootstrap": "^4.4.1",
     "core-js": "^2.6.11",
+    "datatables.net": "^1.10.20",
+    "datatables.net-dt": "^1.10.20",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.5.0",
-    "ng2-toastr": "^4.1.2",
-    "ngx-toastr": "^12.0.1",
+    "ng2-toasty": "^4.0.3",
     "popper.js": "^1.16.1",
     "rxjs": "6.3.3",
+    "rxjs-compat": "^6.5.5",
+    "sweetalert2": "^9.10.12",
+    "underscore": "^1.10.2",
     "webpack": "^4.42.1",
     "zone.js": "^0.8.29"
   },
@@ -50,10 +62,10 @@
     "karma-coverage-istanbul-reporter": "~1.4.2",
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "typescript": "2.7.2"
+    "typescript": "2.8.1"
   },
   "optionalDependencies": {
-    "node-sass": "^4.9.3",
+    "node-sass": "^4.14.0",
     "protractor": "~5.4.0",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1"

@@ -21,6 +21,7 @@
             <option class="dropdown-header" [ngValue]="undefined" selected>please Select...</option>
             <option *ngFor="let m of makes" [ngValue]="m">{{ m.name }}</option>
           </select>
+          <span class="invalid-feedback">This field is required</span>
         </div>
         <div class="form-row">
           <label class="text-info mb-1" for="model">Model</label>
@@ -34,6 +35,7 @@
             <option class="dropdown-header" [ngValue]="undefined" selected>please Select...</option>
             <option *ngFor="let m of selectedMake?.models" [ngValue]="m.id">{{ m.name }}</option>
           </select>
+          <span class="invalid-feedback">This field is required</span>
         </div>
       </div>
       <div class="col-1 col-md-1 col-sm-1"></div>
@@ -59,8 +61,8 @@
                      type="checkbox"
                      [id]="feature.name"
                      [name]="feature.name"
-                     [value]="feature.Id"
-                     ngModel />
+                     [value]="feature.id"
+                     [(ngModel)]="markedFeatures[feature.id]"/>
               <label class="custom-control-label" [for]="feature.name">{{feature.name}}</label>
             </div>
           </div>
@@ -86,6 +88,7 @@
                    name="contactName"
                    required
                    #cName="ngModel" />
+            <span class="invalid-feedback">This field is required</span>
           </div>
           <div class="col-sm-4 col-md-4">
             <label class="text-info" for="cPhone">Contact Phone</label>
@@ -98,7 +101,10 @@
                    name="contactPhone"
                    [(ngModel)]="vehicle.contactInfo.phone"
                    required
+                   pattern="([0-9]|-| )+"
                    #cPhone="ngModel" />
+            <span class="invalid-feedback" *ngIf="cPhone.invalid && (cPhone.dirty || cPhone.touched) && cPhone.errors.required">This field is required</span>
+            <span class="invalid-feedback" *ngIf="cPhone.invalid && (cPhone.dirty || cPhone.touched) && cPhone.errors.pattern">Not a valid phone number</span>
           </div>
         </div>
         <div class="form-row">
@@ -112,18 +118,22 @@
                    placeholder="someone@something.com"
                    name="contactEmail"
                    [(ngModel)]="vehicle.contactInfo.email"
-                   required
+                   email
                    #cEmail="ngModel" />
+              <span class="invalid-feedback" *ngIf="cEmail.invalid && (cEmail.dirty || cEmail.touched) && cEmail.errors.email">Not a valid email address</span>
           </div>
         </div>
       </div>
     </div>
     <div class="form-row">
       <div class="col-sm-2 col-md-2">
-        <button type="submit" class="btn btn-primary form-control" [disabled]="false">Submit</button>
+        <button type="submit" class="btn btn-primary form-control" [disabled]="form.invalid">Submit</button>
       </div>
       <div class="col-sm-2 col-md-2">
         <button type="button" class="btn btn-secondary form-control" (click)="clearControls(form)">Clear</button>
+      </div>
+      <div class="col-sm-2 col-md-2" *ngIf="isEditMode">
+        <button type="button" class="btn btn-danger form-control" (click)="opensweetalert(vehicle.id)">Delete</button>
       </div>
     </div>
   </div>

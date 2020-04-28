@@ -1,11 +1,22 @@
-import { Make } from "./Make";
-import { Model } from "./Model";
-import { Feature } from "./Feature";
-
 export class Vehicle {
-  id: number = 0;
-  modelId: number;
-  isRegistered: boolean = false;
-  features: number[] = [];
-  contactInfo: any = { name: "", phone: "", email: "" }
+    id: number;
+    model: {
+        id: number;
+        name: number;
+    };
+    make: {
+        id: number;
+        name: string;
+  };
+  isRegistered: boolean;
+    features: [{
+        id: number;
+        name: string;
+    }];
+    lastUpdated: Date;
+    contactInfo: {
+        name: string;
+        phone: string;
+        email: string;
+    };
 }

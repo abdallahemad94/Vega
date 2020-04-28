@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Vega.Models;
 
-namespace Vega.Models.EntitiesConfiguration
+namespace Vega.Common.EntitiesConfiguration
 {
     public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
     {
@@ -15,7 +12,7 @@ namespace Vega.Models.EntitiesConfiguration
 
             builder.HasKey(vehicle => vehicle.Id);
 
-            builder.HasOne<Model>(vehicle => vehicle.Model)
+            builder.HasOne(vehicle => vehicle.Model)
                 .WithMany(model => model.Vehicles)
                 .HasPrincipalKey(model => model.Id)
                 .HasForeignKey(vehicle => vehicle.ModelId)
@@ -37,10 +34,10 @@ namespace Vega.Models.EntitiesConfiguration
                 .HasDefaultValueSql("GETDATE()")
                 .IsRequired();
 
-            builder.HasMany<VehicleFeature>(vehicel => vehicel.Features)
+            builder.HasMany(vehicel => vehicel.Features)
                 .WithOne(vehicleFeature => vehicleFeature.Vehicle)
                 .HasPrincipalKey(vehicle => vehicle.Id)
-                .HasForeignKey(VehicleFeature => VehicleFeature.VehicleId)
+                .HasForeignKey(vehicleFeature => vehicleFeature.VehicleId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }

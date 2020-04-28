@@ -2,7 +2,7 @@
 
 namespace Vega.ApiViewModels
 {
-    public class ContactViewodel
+    public class ContactResource
     {
         [Required]
         [StringLength(255)]

@@ -10,25 +10,67 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var VehicalsService = /** @class */ (function () {
-    function VehicalsService(http, baseUrl) {
+var ng2_toasty_1 = require("ng2-toasty");
+var VehiclesService = /** @class */ (function () {
+    function VehiclesService(http, baseUrl, toastService, toastConfig) {
         this.http = http;
         this.baseUrl = baseUrl;
+        this.toastService = toastService;
+        this.toastConfig = toastConfig;
+        this.apiUrl = this.baseUrl + "api/vehicles/";
     }
-    VehicalsService.prototype.getMakes = function () {
-        return this.http.get(this.baseUrl + 'api/vehicles/get/makes');
+    VehiclesService.prototype.getMakes = function () {
+        return this.http.get(this.apiUrl + "get/makes");
     };
-    VehicalsService.prototype.getFeatures = function () {
-        return this.http.get(this.baseUrl + 'api/vehicles/get/features');
+    VehiclesService.prototype.getFeatures = function () {
+        return this.http.get(this.apiUrl + "get/features");
     };
-    VehicalsService.prototype.addVehicle = function (vehicle) {
-        this.http.post(this.baseUrl + "api/vehicles/add", vehicle).subscribe(function (success) { return console.log(success); }, function (error) { return console.error(error); });
+    VehiclesService.prototype.addVehicle = function (vehicle) {
+        var _this = this;
+        this.http.post(this.apiUrl + "add", vehicle).subscribe(function (success) {
+            var toastOptions = new ng2_toasty_1.ToastOptions();
+            toastOptions.title = "Saved Successfully";
+            toastOptions.msg = "Your Data has been saved successflly";
+            toastOptions.showClose = true;
+            toastOptions.theme = "bootstrap";
+            _this.toastService.success(toastOptions);
+        });
     };
-    VehicalsService = __decorate([
+    VehiclesService.prototype.updateVehicle = function (vehicle) {
+        var _this = this;
+        if (vehicle.id <= 0)
+            return;
+        this.http.put(this.apiUrl + "update/" + vehicle.id, vehicle).subscribe(function (success) {
+            var toastOptions = new ng2_toasty_1.ToastOptions();
+            toastOptions.title = "Saved Successfully";
+            toastOptions.msg = "Your Data has been saved successflly";
+            toastOptions.showClose = true;
+            toastOptions.theme = "bootstrap";
+            _this.toastService.success(toastOptions);
+        });
+    };
+    VehiclesService.prototype.deleteVehicle = function (id) {
+        var _this = this;
+        this.http.delete(this.apiUrl + "delete/" + id).subscribe(function (success) {
+            var toastOptions = new ng2_toasty_1.ToastOptions();
+            toastOptions.title = "Delete Successfully";
+            toastOptions.msg = "Your Data has been deleted successflly";
+            toastOptions.showClose = true;
+            toastOptions.theme = "bootstrap";
+            _this.toastService.success(toastOptions);
+        });
+    };
+    VehiclesService.prototype.getVehicle = function (id) {
+        return this.http.get(this.apiUrl + "get/" + id);
+    };
+    VehiclesService.prototype.getAllVehicles = function () {
+        return this.http.get(this.apiUrl + "get/all");
+    };
+    VehiclesService = __decorate([
         core_1.Injectable(),
-        __param(1, core_1.Inject('BASE_URL'))
-    ], VehicalsService);
-    return VehicalsService;
+        __param(1, core_1.Inject("BASE_URL"))
+    ], VehiclesService);
+    return VehiclesService;
 }());
-exports.VehicalsService = VehicalsService;
+exports.VehiclesService = VehiclesService;
 //# sourceMappingURL=vehicle.service.js.map

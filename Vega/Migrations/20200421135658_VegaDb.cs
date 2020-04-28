@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Vega.Migrations
 {
-    public partial class VegaDB : Migration
+    public partial class VegaDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -61,7 +61,7 @@ namespace Vega.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ModelId = table.Column<int>(nullable: false),
-                    IsRegestired = table.Column<bool>(nullable: false),
+                    IsRegistered = table.Column<bool>(nullable: false),
                     ContactName = table.Column<string>(maxLength: 255, nullable: false),
                     ContactPhone = table.Column<string>(maxLength: 255, nullable: false),
                     ContactEmail = table.Column<string>(maxLength: 255, nullable: true),
@@ -177,26 +177,26 @@ namespace Vega.Migrations
             migrationBuilder.Sql("INSERT INTO [Features](Name) VALUES('CommonFeature')");
 
             //******************#########  insert data to Vehicles table ############****************************
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'Model'), 1, 'John Smith', '012345', 'JohnSmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'NewModel'), 1, 'Julia Smith', '123456', 'JuliaSmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'OldModel'), 1, 'Mick Smith', '234567', 'MickSmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'GoodModel'), 1, 'Jodi Smith', '345678', 'JodiSmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'BadModel'), 1, 'Riley Smith', '456789', 'RileySmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'CommonModel'), 1, 'Smith', '567890', 'Smith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'Model'), 1, 'John Smith', '012345', 'JohnSmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'NewModel'), 1, 'Julia Smith', '123456', 'JuliaSmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'OldModel'), 1, 'Mick Smith', '234567', 'MickSmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'GoodModel'), 1, 'Jodi Smith', '345678', 'JodiSmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'BadModel'), 1, 'Riley Smith', '456789', 'RileySmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'CommonModel'), 1, 'Smith', '567890', 'Smith@test.Com', GETDATE())");
 
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'Model'), 1, 'John Smith1', '012345', 'JohnSmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'NewModel'), 1, 'Julia Smith1', '123456', 'JuliaSmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'OldModel'), 1, 'Mick Smith1', '234567', 'MickSmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'GoodModel'), 1, 'Jodi Smith1', '345678', 'JodiSmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'BadModel'), 1, 'Riley Smith1', '456789', 'RileySmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'CommonModel'), 1, 'Smith1', '567890', 'Smith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'Model'), 1, 'John Smith1', '012345', 'JohnSmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'NewModel'), 1, 'Julia Smith1', '123456', 'JuliaSmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'OldModel'), 1, 'Mick Smith1', '234567', 'MickSmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'GoodModel'), 1, 'Jodi Smith1', '345678', 'JodiSmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'BadModel'), 1, 'Riley Smith1', '456789', 'RileySmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'CommonModel'), 1, 'Smith1', '567890', 'Smith@test.Com', GETDATE())");
 
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'Model'), 1, 'John Smith2', '012345', 'JohnSmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'NewModel'), 1, 'Julia Smith2', '123456', 'JuliaSmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'OldModel'), 1, 'Mick Smith2', '234567', 'MickSmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'GoodModel'), 1, 'Jodi Smith2', '345678', 'JodiSmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'BadModel'), 1, 'Riley Smith2', '456789', 'RileySmith@test.Com', GETDATE())");
-            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegestired, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'CommonModel'), 1, 'Smith2', '567890', 'Smith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'Model'), 1, 'John Smith2', '012345', 'JohnSmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'NewModel'), 1, 'Julia Smith2', '123456', 'JuliaSmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'OldModel'), 1, 'Mick Smith2', '234567', 'MickSmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'GoodModel'), 1, 'Jodi Smith2', '345678', 'JodiSmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'BadModel'), 1, 'Riley Smith2', '456789', 'RileySmith@test.Com', GETDATE())");
+            migrationBuilder.Sql("INSERT INTO [Vehicles](ModelId, IsRegistered, ContactName, ContactPhone, ContactEmail, LastUpdated) VALUES((SELECT [Id] FROM [Models] WHERE [Name] = 'CommonModel'), 1, 'Smith2', '567890', 'Smith@test.Com', GETDATE())");
 
             //******************#########  insert data to VehiclesFeatures table ############****************************
             migrationBuilder.Sql("INSERT INTO [VehiclesFeatures](VehicleId, FeatureId) VALUES((SELECT [Id] FROM [Vehicles] WHERE [ContactName] = 'John Smith'), (SELECT [Id] FROM [Features] WHERE [Name] = 'Feature'))");

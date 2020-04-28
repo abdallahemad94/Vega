@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Vega.Models;
 
-namespace Vega.Models.EntitiesConfiguration
+namespace Vega.Common.EntitiesConfiguration
 {
     public class MakeConfiguration : IEntityTypeConfiguration<Make>
     {
@@ -15,7 +12,7 @@ namespace Vega.Models.EntitiesConfiguration
 
             builder.HasKey(make => make.Id);
 
-            builder.HasMany<Model>(make => make.Models)
+            builder.HasMany(make => make.Models)
                 .WithOne(model => model.Make)
                 .HasPrincipalKey(make => make.Id)
                 .HasForeignKey(model => model.MakeId)

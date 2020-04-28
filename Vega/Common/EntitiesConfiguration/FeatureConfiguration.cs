@@ -1,21 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Vega.Models;
 
-namespace Vega.Models.EntitiesConfiguration
+namespace Vega.Common.EntitiesConfiguration
 {
-    public class FeatureConfiguration : IEntityTypeConfiguration<Feature>
+    public class FeatureConfiguration : IEntityTypeConfiguration<FeatureModel>
     {
-        public void Configure(EntityTypeBuilder<Feature> builder)
+        public void Configure(EntityTypeBuilder<FeatureModel> builder)
         {
             builder.ToTable("Features");
 
             builder.HasKey(feature => feature.Id);
 
-            builder.HasMany<VehicleFeature>(feature => feature.Vehicles)
+            builder.HasMany(feature => feature.Vehicles)
                 .WithOne(vehicleFeature => vehicleFeature.Feature)
                 .HasPrincipalKey(feature => feature.Id)
                 .HasForeignKey(vehicleFeautre => vehicleFeautre.FeatureId)

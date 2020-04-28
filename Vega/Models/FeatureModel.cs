@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Vega.Models
 {
-    public class Feature
+    public class FeatureModel
     {
         public int Id { get; set; }
 

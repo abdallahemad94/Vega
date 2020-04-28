@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Vega.Models
 {
@@ -10,6 +9,6 @@ namespace Vega.Models
         public Vehicle Vehicle { get; set; }
 
         public int FeatureId { get; set; }
-        public Feature Feature { get; set; }
+        public FeatureModel Feature { get; set; }
     }
 }

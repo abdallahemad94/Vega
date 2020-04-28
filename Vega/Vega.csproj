@@ -15,13 +15,11 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="bootstrap" Version="4.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="toastr" Version="2.1.1" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
@@ -31,6 +29,8 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+    <None Remove="ClientApp\node_modules\**" />
+    <Content Remove="ClientApp\node_modules\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
@@ -38,7 +38,7 @@
     <None Remove="ClientApp\src\app\models\Feature.ts" />
     <None Remove="ClientApp\src\app\models\Make.ts" />
     <None Remove="ClientApp\src\app\models\Model.ts" />
-    <None Remove="ClientApp\src\app\models\Vehicle.ts" />
+    <None Remove="ClientApp\src\app\models\SaveVehicle.ts" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
@@ -46,7 +46,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\models\Feature.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\Make.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\Model.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\models\Vehicle.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\SaveVehicle.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
@@ -116,10 +116,19 @@
     <Compile Remove="Migrations\20200420090542_VegaDB1.Designer.cs" />
     <Compile Remove="Migrations\20200420135823_VegaDB.cs" />
     <Compile Remove="Migrations\20200420135823_VegaDB.Designer.cs" />
+    <Compile Remove="Migrations\20200420152807_VegaDB.cs" />
+    <Compile Remove="Migrations\20200420152807_VegaDB.Designer.cs" />
+    <Compile Remove="Migrations\20200421134842_fixnames.cs" />
+    <Compile Remove="Migrations\20200421134842_fixnames.Designer.cs" />
+    <Compile Remove="ClientApp\node_modules\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="node_modules\Bootstrap\**" />
+    <None Include="$(SpaRoot)node_modules\bootstrap\**" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="ClientApp\node_modules\**" />
+  </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
   
 </Project>

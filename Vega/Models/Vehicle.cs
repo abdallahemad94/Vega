@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Vega.Models
 {
@@ -13,7 +11,7 @@ namespace Vega.Models
 
         public Model Model { get; set; }
 
-        public bool IsRegestired { get; set; } = false;
+        public bool IsRegistered { get; set; }
 
         public string ContactName { get; set; }
 

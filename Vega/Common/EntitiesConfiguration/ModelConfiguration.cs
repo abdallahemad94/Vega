@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Vega.Models;
 
-namespace Vega.Models.EntitiesConfiguration
+namespace Vega.Common.EntitiesConfiguration
 {
     public class ModelConfiguration : IEntityTypeConfiguration<Model>
     {
@@ -20,13 +16,13 @@ namespace Vega.Models.EntitiesConfiguration
                 .HasMaxLength(255)
                 .IsRequired();
 
-            builder.HasOne<Make>(model => model.Make)
+            builder.HasOne(model => model.Make)
                 .WithMany(make => make.Models)
                 .HasPrincipalKey(make => make.Id)
                 .HasForeignKey(model => model.MakeId)
                 .IsRequired();
 
-            builder.HasMany<Vehicle>(model => model.Vehicles)
+            builder.HasMany(model => model.Vehicles)
                 .WithOne(vehicle => vehicle.Model)
                 .HasPrincipalKey(model => model.Id)
                 .HasForeignKey(vehicle => vehicle.ModelId)
