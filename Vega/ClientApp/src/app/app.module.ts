@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastyModule } from "ng2-toasty";
-import { DataTablesModule } from 'angular-datatables';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
@@ -37,7 +36,6 @@ import { WjGridSearchModule } from 'wijmo/wijmo.angular2.grid.search';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    DataTablesModule,
     WjGridModule,
     WjInputModule,
     WjGridFilterModule,
