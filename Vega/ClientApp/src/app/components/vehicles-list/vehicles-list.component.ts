@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { VehiclesService } from "../../services/vehicle.service";
-import { Vehicle } from "../../models/Vehicle";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import { Subject, forkJoin, Observable } from "rxjs";
-import { Make } from "../../models/Make";
-import { DataTableDirective } from "angular-datatables";
+import { Observable } from "rxjs";
+import * as wjcCore from 'wijmo/wijmo';
+import * as wjcGrid from 'wijmo/wijmo.grid';
+import { Vehicle } from "../../models/Vehicle";
 
 @Component({
     selector: 'vehicles-list',
@@ -12,35 +12,39 @@ import { DataTableDirective } from "angular-datatables";
     styleUrls: ['./vehicles-list.component.css']
 })
 export class VehiclesListComponent implements OnInit {
-  @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
+  @ViewChild('flex') flex: wjcGrid.FlexGrid;
   vehicles: Vehicle[] = [];
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject();
-  constructor(private vehiclesService: VehiclesService) {
-  }
+  collectionView: wjcCore.CollectionView = new wjcCore.CollectionView();
+  pageSize: number = 10;
+  constructor(private vehiclesService: VehiclesService) { }
 
   ngOnInit() {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 5,
-      columnDefs: [{ orderable: false, targets: [0, 3, 4, 6] }]
-    };
-
     const sources: any[] = [
       this.vehiclesService.getAllVehicles(),
-      this.vehiclesService.getMakes()
     ];
 
     Observable.forkJoin(sources)
       .subscribe(
-        ([vehicles, makes]) => {
+        ([vehicles]) => {
+          vehicles.forEach(v => v.lastUpdated = new Date(Date.parse(v.lastUpdated)));
           this.vehicles = vehicles;
-          this.dtTrigger.next();
-      });
+          this.collectionView = new wjcCore.CollectionView(vehicles, { pageSize: this.pageSize });
+        });
   }
 
   OnDelete(id: number) {
-    this.vehiclesService.deleteVehicle(id);
+    this.vehiclesService.deleteVehicle(id).then(() => {
+      let removedIndex = this.vehicles.findIndex((v) => v.id == id);
+      this.vehicles.splice(removedIndex, 1);
+      let currentPage = this.collectionView.pageIndex;
+      this.collectionView = new wjcCore.CollectionView(this.vehicles, { pageSize: this.pageSize});
+      this.flex.itemsSource = this.collectionView;
+      this.flex.refresh(true);
+      if (this.collectionView.pageCount > currentPage)
+        this.collectionView.moveToPage(currentPage);
+      else
+        this.collectionView.moveToLastPage();
+    });
   }
 
   opensweetalert(id: number) {
@@ -56,4 +60,9 @@ export class VehiclesListComponent implements OnInit {
     }).then(result => { if (result.value) this.OnDelete(id) });
   }
 
+  changePageCount() {
+    this.collectionView = new wjcCore.CollectionView(this.vehicles, { pageSize: this.pageSize });
+    this.flex.itemsSource = this.collectionView;
+    this.flex.refresh(true);
+  }
 }

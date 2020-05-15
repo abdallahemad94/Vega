@@ -23,5 +23,7 @@ namespace Vega.Models
 
         public IList<VehicleFeature> Features { get; set; } = new List<VehicleFeature>();
 
+        public List<VehiclePhoto> Photos { get; set; } = new List<VehiclePhoto>();
+
     }
 }

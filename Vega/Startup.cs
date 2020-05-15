@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using Vega.Common;
+using Vega.Models;
 
 namespace Vega
 {
@@ -27,6 +28,7 @@ namespace Vega
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.Configure<PhotosSettings>(Configuration.GetSection("PhotoSettings"));
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

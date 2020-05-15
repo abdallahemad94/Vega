@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vega.Models;
@@ -43,6 +44,16 @@ namespace Vega.Common
         public async Task Delete(Vehicle vehicle)
         {
             await Task.Run( () => DbContext.Vehicles.Remove(vehicle));
+        }
+
+        public async Task<List<VehiclePhoto>> GetPhotos(int vehicleId)
+        {
+            return await DbContext.Photos.Where(photo => photo.VehicleId == vehicleId).ToListAsync();
+        }
+
+        public async Task AddPhoto(VehiclePhoto photo)
+        {
+            await DbContext.Photos.AddAsync(photo);
         }
     }
 }
