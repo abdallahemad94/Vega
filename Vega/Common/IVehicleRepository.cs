@@ -10,5 +10,6 @@ namespace Vega.Common
         Task<List<Vehicle>> GetAllVehicles();
         Task Add(Vehicle vehicle);
         Task Delete(Vehicle vehicle);
+        Task<List<VehiclePhoto>> GetPhotos(int vehicleId);
     }
 }

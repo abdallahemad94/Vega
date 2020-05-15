@@ -1,0 +1,59 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" [ngClass]="vehicleTab ? 'active' : ''" (click)="photsosTab = false; vehicleTab = true" style="cursor: pointer">Vehicle</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" [ngClass]="photsosTab ? 'active' : ''" (click)="photsosTab = true; vehicleTab = false" style="cursor: pointer">Photos</a>
+  </li>
+</ul>
+
+
+<div class="tab-content mt-2" *ngIf="vehicleTab">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-12">
+      <p><b>Make:</b> {{vehicle?.make?.name}}</p>
+      <p><b>Model:</b> {{vehicle?.model?.name}}</p>
+      <p><b>Registered:</b> {{vehicle?.isRegistered}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-12" *ngIf="vehicle.features && vehicle.features.length > 0">
+      <b>Features:</b>
+      <ul>
+        <li *ngFor="let f of vehicle.features">{{f.name}}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-12" *ngIf="vehicle.contactInfo">
+      <p><b>Contact Name: </b>{{vehicle.contactInfo.name}}</p>
+      <p><b>Contact Email: </b>{{vehicle.contactInfo.email}}</p>
+      <p><b>Contact phone: </b>{{vehicle.contactInfo.phone}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2 col-md-2">
+      <a class="btn btn-warning text-white form-control" [routerLink]="['../../', 'edit', vehicle.id]">Edit</a>
+    </div>
+    <div class="col-sm-2 col-md-2">
+      <button type="button" class="btn btn-danger text-white form-control " (click)="opensweetalert(vehicle.id)">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="tab-content mt-2" *ngIf="photsosTab">
+  <input type="file" (change)="addPhoto()" #fileInput/>
+  <br/>
+  <div class="progress" *ngIf="progress && progress.percentage > 0 && progress.percentage < 100">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" [style.width]="progress.percentage + '%'">
+      <span>{{progress.percentage + '% Completed'}}</span>
+      <span class="sr-only">{{progress.percentage + '% Completed'}}</span>
+    </div>
+  </div>
+  <br/>
+  <div class="row m-1 mt-3 photos">
+    <div class="col-12 col-md-12 col-sm-12" *ngIf="photos && photos.length > 0">
+      <img src="/Photos/{{img.fileName}}" alt="" *ngFor="let img of photos" class="img-thumbnail m-1 photo"/>
+    </div>
+  </div>
+</div>

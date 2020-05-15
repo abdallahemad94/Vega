@@ -5,7 +5,7 @@ import { NgForm } from "@angular/forms";
 import { Feature } from "../../models/Feature";
 import { Subscription, Observable } from "rxjs";
 import { SaveVehicle } from "../../models/SaveVehicle";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import "rxjs/add/observable/forkJoin";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
@@ -24,7 +24,10 @@ export class AddVehicleComponent implements OnInit, OnDestroy {
   private vehicleId: number = 0; 
   private markedFeatures: {} = {};
 
-  constructor(private readonly vehiclesService: VehiclesService, private route: ActivatedRoute)
+  constructor(
+    private readonly vehiclesService: VehiclesService,
+    private route: ActivatedRoute,
+    private router: Router)
   {
     this.route.params.subscribe(params => {
       if (params["id"] && !isNaN(params["id"])) {
@@ -66,9 +69,9 @@ export class AddVehicleComponent implements OnInit, OnDestroy {
         this.vehicle.features.push( f.id );
     });
     if (this.isEditMode)
-      this.vehiclesService.updateVehicle(this.vehicle);
+      this.vehiclesService.updateVehicle(this.vehicle).then((success) => this.router.navigate(['view', success.id], { relativeTo: this.route.parent }));
     else
-      this.vehiclesService.addVehicle(this.vehicle);
+      this.vehiclesService.addVehicle(this.vehicle).then((success) => this.router.navigate(['view', success.id], { relativeTo: this.route.parent }));
   }
 
   clearControls(form: NgForm) {
@@ -88,7 +91,7 @@ export class AddVehicleComponent implements OnInit, OnDestroy {
   }
 
   OnDelete(id: number) {
-    this.vehiclesService.deleteVehicle(id);
+    this.vehiclesService.deleteVehicle(id).then(() => this.router.navigate([''], { relativeTo: this.route.parent }));
   }
 
   opensweetalert(id: number) {

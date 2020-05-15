@@ -9,7 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var sweetalert2_js_1 = require("sweetalert2/dist/sweetalert2.js");
 var rxjs_1 = require("rxjs");
-var Make_1 = require("../../models/Make");
 var angular_datatables_1 = require("angular-datatables");
 var VehiclesListComponent = /** @class */ (function () {
     function VehiclesListComponent(vehiclesService) {
@@ -17,15 +16,13 @@ var VehiclesListComponent = /** @class */ (function () {
         this.vehicles = [];
         this.dtOptions = {};
         this.dtTrigger = new rxjs_1.Subject();
-        this.makes = [];
-        this.makeFilter = new Make_1.Make();
     }
     VehiclesListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 5,
-            columnDefs: [{ orderable: false, targets: [0, 3, 4] }]
+            columnDefs: [{ orderable: false, targets: [0, 3, 4, 6] }]
         };
         var sources = [
             this.vehiclesService.getAllVehicles(),
@@ -36,10 +33,7 @@ var VehiclesListComponent = /** @class */ (function () {
             var vehicles = _a[0], makes = _a[1];
             _this.vehicles = vehicles;
             _this.dtTrigger.next();
-            _this.makes = makes;
         });
-    };
-    VehiclesListComponent.prototype.filterByMake = function (make) {
     };
     VehiclesListComponent.prototype.OnDelete = function (id) {
         this.vehiclesService.deleteVehicle(id);

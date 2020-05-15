@@ -45,11 +45,15 @@ namespace Vega.Common
                 .ForMember(dest => dest.ContactInfo, opt => opt.MapFrom(src => new ContactResource() { Name = src.ContactName, Email = src.ContactEmail, Phone = src.ContactPhone }))
                 .ForMember(dest => dest.Features, opt => opt.MapFrom(src => src.Features.Select(f => f.FeatureId)));
 
-
             CreateMap<Vehicle, VehicleResource>()
                 .ForMember(dest => dest.ContactInfo, opt => opt.MapFrom(src => new ContactResource() { Name = src.ContactName, Email = src.ContactEmail, Phone = src.ContactPhone }))
                 .ForMember(dest => dest.Features, opt => opt.MapFrom(src => src.Features.Select(f => new KeyValuePairResource() { Id = f.Feature.Id, Name = f.Feature.Name })))
                 .ForMember(dest => dest.Make, opt => opt.MapFrom(src => src.Model.Make));
+
+            CreateMap<VehiclePhoto, VehiclePhotoResource>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.FileName, opt => opt.MapFrom(src => src.FileName))
+                .ForMember(dest => dest.VehicleId, opt => opt.MapFrom(src => src.VehicleId)).ReverseMap();
         }
     }
 }

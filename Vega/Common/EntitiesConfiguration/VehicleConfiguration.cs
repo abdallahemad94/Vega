@@ -40,6 +40,11 @@ namespace Vega.Common.EntitiesConfiguration
                 .HasForeignKey(vehicleFeature => vehicleFeature.VehicleId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(vehicle => vehicle.Photos)
+                .WithOne(photo => photo.Vehicle)
+                .HasPrincipalKey(vehicle => vehicle.Id)
+                .HasForeignKey(photo => photo.VehicleId);
         }
     }
 }

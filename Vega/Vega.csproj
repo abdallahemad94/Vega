@@ -20,6 +20,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
@@ -120,6 +121,8 @@
     <Compile Remove="Migrations\20200420152807_VegaDB.Designer.cs" />
     <Compile Remove="Migrations\20200421134842_fixnames.cs" />
     <Compile Remove="Migrations\20200421134842_fixnames.Designer.cs" />
+    <Compile Remove="Migrations\20200513194454_photos.cs" />
+    <Compile Remove="Migrations\20200513194454_photos.Designer.cs" />
     <Compile Remove="ClientApp\node_modules\**" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastyModule } from "ng2-toasty";
 import { DataTablesModule } from 'angular-datatables';
@@ -14,13 +14,21 @@ import { VehiclesService } from "./services/vehicle.service";
 import { AppRoutingModule } from "./app-routing.module";
 import { VehiclesListComponent } from "./components/vehicles-list/vehicles-list.component";
 import { AppErrorHandler } from "./app.error-handler";
+import { ViewVehicleComponent } from "./components/view-vehicle/view-vehicle.component";
+import { ProgressService, HttpInterceptorWithProgress } from "./services/progress.service";
+import { WjGridModule } from "wijmo/wijmo.angular2.grid";
+import { WjInputModule } from "wijmo/wijmo.angular2.input";
+import { WjGridFilterModule } from 'wijmo/wijmo.angular2.grid.filter';
+import { WjGridSearchModule } from 'wijmo/wijmo.angular2.grid.search';
+
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
     AddVehicleComponent,
-    VehiclesListComponent
+    VehiclesListComponent,
+    ViewVehicleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -30,8 +38,17 @@ import { AppErrorHandler } from "./app.error-handler";
     FormsModule,
     AppRoutingModule,
     DataTablesModule,
+    WjGridModule,
+    WjInputModule,
+    WjGridFilterModule,
+    WjGridSearchModule,    
     ],
-  providers: [VehiclesService, { provide: ErrorHandler, useClass: AppErrorHandler }],
+  providers: [
+    VehiclesService,
+    ProgressService,
+    { provide: ErrorHandler, useClass: AppErrorHandler },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorWithProgress, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

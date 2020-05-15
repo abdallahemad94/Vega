@@ -10,6 +10,7 @@ namespace Vega.Common
         public DbSet<FeatureModel> Features { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Model> Models { get; set; }
+        public DbSet<VehiclePhoto> Photos { get; set; }
 
         public VegaDbContext(DbContextOptions options) : base(options) 
         {
@@ -23,6 +24,7 @@ namespace Vega.Common
             modelBuilder.ApplyConfiguration(new FeatureConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleFeatureConfiguration());
+            modelBuilder.ApplyConfiguration(new VehiclePhotoConfiguration());
         }
 
     }
