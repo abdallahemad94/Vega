@@ -19,6 +19,7 @@ import { WjGridModule } from "wijmo/wijmo.angular2.grid";
 import { WjInputModule } from "wijmo/wijmo.angular2.input";
 import { WjGridFilterModule } from 'wijmo/wijmo.angular2.grid.filter';
 import { WjGridSearchModule } from 'wijmo/wijmo.angular2.grid.search';
+import { WjGridGrouppanelModule } from 'wijmo/wijmo.angular2.grid.grouppanel';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { WjGridSearchModule } from 'wijmo/wijmo.angular2.grid.search';
     WjGridModule,
     WjInputModule,
     WjGridFilterModule,
-    WjGridSearchModule,    
+    WjGridSearchModule,
+    WjGridGrouppanelModule,
     ],
   providers: [
     VehiclesService,
