@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import * as wjcCore from 'wijmo/wijmo';
 import * as wjcGrid from 'wijmo/wijmo.grid';
 import { Vehicle } from "../../models/Vehicle";
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
     selector: 'vehicles-list',
@@ -16,7 +17,7 @@ export class VehiclesListComponent implements OnInit {
   vehicles: Vehicle[] = [];
   collectionView: wjcCore.CollectionView = new wjcCore.CollectionView();
   pageSize: number = 10;
-  constructor(private vehiclesService: VehiclesService) { }
+  constructor(private vehiclesService: VehiclesService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     const sources: any[] = [
@@ -60,9 +61,14 @@ export class VehiclesListComponent implements OnInit {
     }).then(result => { if (result.value) this.OnDelete(id) });
   }
 
-  changePageCount() {
+  changePageSize() {
     this.collectionView = new wjcCore.CollectionView(this.vehicles, { pageSize: this.pageSize });
     this.flex.itemsSource = this.collectionView;
     this.flex.refresh(true);
+  }
+
+  viewVehicle() {
+    let selectedId = this.flex.selectedRows[0].dataItem["id"];
+    this.router.navigate(["view", selectedId], { relativeTo: this.route });
   }
 }

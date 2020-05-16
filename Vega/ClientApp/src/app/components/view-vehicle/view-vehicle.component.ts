@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { forkJoin } from "rxjs";
 import { ProgressService } from "../../services/progress.service";
+import { Location } from "@angular/common";
 
 
 @Component({
@@ -24,7 +25,8 @@ export class ViewVehicleComponent implements OnInit {
     private vehiclesService: VehiclesService,
     private route: ActivatedRoute,
     private router: Router,
-    private progressService: ProgressService) {
+    private progressService: ProgressService,
+    private location: Location) {
     this.route.params.subscribe(params => {
       if (params["id"] && !isNaN(params["id"])) {
         this.vehicleId = +params["id"];
@@ -87,5 +89,9 @@ export class ViewVehicleComponent implements OnInit {
         this.photos.push(success);
       });
     return true;
+  }
+
+  back() {
+    this.location.back();
   }
 }

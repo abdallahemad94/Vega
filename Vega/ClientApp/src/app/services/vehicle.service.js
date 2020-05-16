@@ -41,7 +41,7 @@ var VehiclesService = /** @class */ (function () {
         var _this = this;
         if (vehicle.id <= 0)
             return;
-        this.http.put(this.apiUrl + "update/" + vehicle.id, vehicle).toPromise().then(function (success) {
+        return this.http.put(this.apiUrl + "update/" + vehicle.id, vehicle).toPromise().then(function (success) {
             var toastOptions = new ng2_toasty_1.ToastOptions();
             toastOptions.title = "Saved Successfully";
             toastOptions.msg = "Your Data has been saved successflly";
@@ -71,12 +71,12 @@ var VehiclesService = /** @class */ (function () {
     VehiclesService.prototype.getPhotos = function (vehicleId) {
         if (vehicleId == null || vehicleId <= 0)
             throw util_1.error("Vehicle Id cannot be empty");
-        return this.http.get(this.apiUrl + "get/photos/" + vehicleId);
+        return this.http.get(this.apiUrl + ("get/photos/" + vehicleId));
     };
     VehiclesService.prototype.addPhoto = function (vehicleId, image) {
         var formdate = new FormData();
         formdate.append("file", image);
-        return this.http.post(this.apiUrl + ("add/photos/" + vehicleId), formdate);
+        return this.http.post(this.apiUrl + ("add/photos/" + vehicleId), formdate, { reportProgress: true });
     };
     VehiclesService = __decorate([
         core_1.Injectable(),

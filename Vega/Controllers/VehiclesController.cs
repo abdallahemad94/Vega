@@ -4,6 +4,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using Vega.ApiViewModels;
 using Vega.Common;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Drawing;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 
 namespace Vega.Controllers
@@ -77,7 +79,7 @@ namespace Vega.Controllers
 
             return Ok(vehicle);
         }
-
+        [Authorize]
         [HttpPost("add")]
         public async Task<IActionResult> AddVehicle([FromBody] SaveVehicleResource saveVehicleResource)
         {
@@ -93,6 +95,7 @@ namespace Vega.Controllers
             return Ok(Mapper.Map<Vehicle, VehicleResource>(vehicle));
         }
 
+        [Authorize]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateVehicle([FromRoute]int id, [FromBody]SaveVehicleResource saveVehicleResource)
         {
@@ -105,12 +108,13 @@ namespace Vega.Controllers
             Vehicle vehicle = await Repository.GetVehicle(id);
                 
             Mapper.Map(saveVehicleResource, vehicle);
-
+            vehicle.LastUpdated = DateTime.Now;;
             await UnitOfWork.CompleteAsync();
 
             return Ok(Mapper.Map<Vehicle, SaveVehicleResource>(vehicle));
         }
 
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteVehicle([FromRoute]int id)
         {

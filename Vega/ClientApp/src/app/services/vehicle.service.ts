@@ -46,7 +46,7 @@ export class VehiclesService {
     if (vehicle.id <= 0 )
       return;
 
-    this.http.put<SaveVehicle>(this.apiUrl + "update/" + vehicle.id, vehicle).toPromise().then(
+    return this.http.put<SaveVehicle>(this.apiUrl + "update/" + vehicle.id, vehicle).toPromise().then(
       success => {
         const toastOptions: ToastOptions = new ToastOptions();
         toastOptions.title = "Saved Successfully";

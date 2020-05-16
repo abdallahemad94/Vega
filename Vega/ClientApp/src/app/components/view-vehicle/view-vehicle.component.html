@@ -26,6 +26,7 @@
   </div>
   <div class="row">
     <div class="col-sm-12 col-md-12 col-12" *ngIf="vehicle.contactInfo">
+      <p><b>Last Update: </b>{{vehicle.lastUpdated |date: 'EEEE, MMMM d, y, HH:mm:ss zzzz' }}</p>
       <p><b>Contact Name: </b>{{vehicle.contactInfo.name}}</p>
       <p><b>Contact Email: </b>{{vehicle.contactInfo.email}}</p>
       <p><b>Contact phone: </b>{{vehicle.contactInfo.phone}}</p>
@@ -37,6 +38,12 @@
     </div>
     <div class="col-sm-2 col-md-2">
       <button type="button" class="btn btn-danger text-white form-control " (click)="opensweetalert(vehicle.id)">Delete</button>
+    </div>
+    <div class="col-sm-2 col-md-2">
+      <a class="btn btn-primary text-white form-control" [routerLink]="['../../']">Vehicles List</a>
+    </div>
+    <div class="col-sm-2 col-md-2">
+      <button type="button" class="btn btn-secondary text-white form-control " (click)="back()">Back</button>
     </div>
   </div>
 </div>
