@@ -7,24 +7,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var rxjs_1 = require("rxjs");
-var ProgressService = /** @class */ (function () {
-    function ProgressService() {
+var UserProfileComponent = /** @class */ (function () {
+    function UserProfileComponent(auth) {
+        this.auth = auth;
     }
-    ProgressService.prototype.beginTracking = function () {
-        this.uploadProgress = new rxjs_1.Subject();
-        return this.uploadProgress;
+    UserProfileComponent.prototype.ngOnInit = function () {
     };
-    ProgressService.prototype.notify = function (value) {
-        this.uploadProgress.next(value);
-    };
-    ProgressService.prototype.endTracking = function () {
-        this.uploadProgress.complete();
-    };
-    ProgressService = __decorate([
-        core_1.Injectable()
-    ], ProgressService);
-    return ProgressService;
+    UserProfileComponent = __decorate([
+        core_1.Component({
+            selector: 'user-profile',
+            templateUrl: './user-profile.component.html',
+            styleUrls: ['./user-profile.component.css']
+        })
+    ], UserProfileComponent);
+    return UserProfileComponent;
 }());
-exports.ProgressService = ProgressService;
-//# sourceMappingURL=progress.service.js.map
+exports.UserProfileComponent = UserProfileComponent;
+//# sourceMappingURL=user-profile.component.js.map

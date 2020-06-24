@@ -12,7 +12,14 @@
             <a class="nav-link " [routerLink]='["vehicles"]'>Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["active"]'>
-            <a class="nav-link" [routerLink]='["vehicles/new"]'>Add new vehicle</a>
+            <a class="nav-link" [routerLink]='["vehicles/new"]' [ngClass]="auth.loggedIn ? '' : 'disabled'">Add new vehicle</a>
+          </li> 
+          <li class="nav-item" [routerLinkActive]='["active"]'>
+            <a class="nav-link" routerLink="profile" *ngIf="auth.loggedIn">Profile</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="!auth.loggedIn" style="cursor: pointer" (click)="auth.login(currentUrl)">Login</a>
+            <a class="nav-link" *ngIf="auth.loggedIn" style="cursor: pointer" (click)="auth.logout()">Logout</a>
           </li> 
         </ul>
       </div>

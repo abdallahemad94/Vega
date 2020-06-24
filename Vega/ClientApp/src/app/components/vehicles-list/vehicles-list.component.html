@@ -21,7 +21,8 @@
   </div>
   <wj-group-panel style="display: block;"
                   [grid]="flex"
-                  [placeholder]="'Drag columns here to create groups'">
+                  [placeholder]="'Drag columns here to create groups'"
+                  class="mt-3">
   </wj-group-panel>
   <wj-flex-grid #flex
                 class="grid"
@@ -44,7 +45,7 @@
         <span *ngIf="!cell.item.isRegistered" style="color: red;">Not Registered</span>
       </ng-template>
     </wj-flex-grid-column>
-    <wj-flex-grid-column [header]="'Last Updated'" [binding]="'lastUpdated'" format="d" width="*">
+    <wj-flex-grid-column [header]="'Last Updated'" [binding]="'lastUpdated'" format="D" width="*">
     </wj-flex-grid-column>
     <wj-flex-grid-column [header]="'Contact Name'" [binding]="'contactInfo.name'" width="*"></wj-flex-grid-column>
   </wj-flex-grid>

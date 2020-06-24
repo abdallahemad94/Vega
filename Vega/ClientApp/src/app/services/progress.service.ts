@@ -1,13 +1,11 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { Subject, Observable, Subscription } from "rxjs";
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpEventType, HttpProgressEvent, HttpDownloadProgressEvent } from "@angular/common/http";
-import { HttpUploadProgressEvent } from "@angular/common/http/src/response";
+import { Injectable } from '@angular/core';
+import { Subject } from "rxjs";
 
 @Injectable()
 export class ProgressService {
   private uploadProgress: Subject<any>;
 
-  createUploadProgress() {
+  beginTracking() {
     this.uploadProgress = new Subject<any>();
     return this.uploadProgress;
   }
@@ -16,41 +14,7 @@ export class ProgressService {
     this.uploadProgress.next(value);
   }
 
-  complete() {
+  endTracking() {
     this.uploadProgress.complete();
   }
 }
-
-@Injectable()
-export class HttpInterceptorWithProgress implements HttpInterceptor, OnDestroy {
-  progressSubscription: Subscription;
-  constructor(private service: ProgressService) { }
-
-  ngOnDestroy(): void {
-    this.progressSubscription.unsubscribe();
-  }
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.reportProgress)
-      return next.handle(req).pipe((observ: Observable<HttpEvent<any>>): Observable<HttpEvent<any>> => {
-        this.progressSubscription = observ.subscribe((event: HttpEvent<any>) => {
-          if (event.type == HttpEventType.UploadProgress)
-            this.service.notify(this.createProgress(<HttpUploadProgressEvent>event));
-        },
-          null,
-          () => this.service.complete());
-        return observ;
-      });
-    else
-      return next.handle(req);
-  }
-
-  createProgress(event: HttpProgressEvent) {
-    var prog = {
-      total: event.total,
-      percentage: Math.round(event.loaded / event.total * 100)
-    };
-    return prog;
-  }
-}
-

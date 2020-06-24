@@ -14,12 +14,24 @@ import { AppRoutingModule } from "./app-routing.module";
 import { VehiclesListComponent } from "./components/vehicles-list/vehicles-list.component";
 import { AppErrorHandler } from "./app.error-handler";
 import { ViewVehicleComponent } from "./components/view-vehicle/view-vehicle.component";
-import { ProgressService, HttpInterceptorWithProgress } from "./services/progress.service";
+import { ProgressService } from "./services/progress.service";
 import { WjGridModule } from "wijmo/wijmo.angular2.grid";
 import { WjInputModule } from "wijmo/wijmo.angular2.input";
 import { WjGridFilterModule } from 'wijmo/wijmo.angular2.grid.filter';
 import { WjGridSearchModule } from 'wijmo/wijmo.angular2.grid.search';
 import { WjGridGrouppanelModule } from 'wijmo/wijmo.angular2.grid.grouppanel';
+import { ProgressInterceptorService } from "./services/progress-interceptor.service";
+import { AuthInterceptorService } from "./services/auth-interceptor.service";
+import { AuthService } from "./services/auth.service";
+import { UserProfileComponent } from "./components/user-profile/user-profile.component";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+
+const Http_Interceptors = [
+  { provide: HTTP_INTERCEPTORS, useClass: ProgressInterceptorService, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+];
+
 
 @NgModule({
   declarations: [
@@ -28,7 +40,8 @@ import { WjGridGrouppanelModule } from 'wijmo/wijmo.angular2.grid.grouppanel';
     HomeComponent,
     AddVehicleComponent,
     VehiclesListComponent,
-    ViewVehicleComponent
+    ViewVehicleComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -42,12 +55,14 @@ import { WjGridGrouppanelModule } from 'wijmo/wijmo.angular2.grid.grouppanel';
     WjGridFilterModule,
     WjGridSearchModule,
     WjGridGrouppanelModule,
+    FontAwesomeModule
     ],
   providers: [
     VehiclesService,
     ProgressService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorWithProgress, multi: true },
+    Http_Interceptors,
+    AuthService,
   ],
   bootstrap: [AppComponent]
 })

@@ -8,6 +8,7 @@ import { SaveVehicle } from "../../models/SaveVehicle";
 import { ActivatedRoute, Router } from "@angular/router";
 import "rxjs/add/observable/forkJoin";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: "add-vehicle",
@@ -23,11 +24,11 @@ export class AddVehicleComponent implements OnInit, OnDestroy {
   private isEditMode: boolean = false;
   private vehicleId: number = 0; 
   private markedFeatures: {} = {};
-
   constructor(
     private readonly vehiclesService: VehiclesService,
     private route: ActivatedRoute,
-    private router: Router)
+    private router: Router,
+    private auth: AuthService)
   {
     this.route.params.subscribe(params => {
       if (params["id"] && !isNaN(params["id"])) {

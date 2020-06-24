@@ -1,5 +1,5 @@
 
-<h2 class="text-info text-center" style="text-decoration:underline;">Add New Vehical</h2>
+<h2 class="text-info text-center" style="text-decoration:underline;">Add New Vehicle</h2>
 
 <form class="form-group container" (ngSubmit)="OnSubmit(form)" #form="ngForm">
   <div class="col-sm-12 col-md-12 col-12">
@@ -127,13 +127,13 @@
     </div>
     <div class="form-row">
       <div class="col-sm-2 col-md-2">
-        <button type="submit" class="btn btn-primary form-control" [disabled]="form.invalid">Submit</button>
+        <button type="submit" class="btn btn-primary form-control" [disabled]="form.invalid || (form.valid && !auth.loggedIn)">Submit</button>
       </div>
       <div class="col-sm-2 col-md-2">
         <button type="button" class="btn btn-secondary form-control" (click)="clearControls(form)">Clear</button>
       </div>
       <div class="col-sm-2 col-md-2" *ngIf="isEditMode">
-        <button type="button" class="btn btn-danger form-control" (click)="opensweetalert(vehicle.id)">Delete</button>
+        <button type="button" class="btn btn-danger form-control" (click)="opensweetalert(vehicle.id)" [disabled]="!auth.loggedIn">Delete</button>
       </div>
     </div>
   </div>

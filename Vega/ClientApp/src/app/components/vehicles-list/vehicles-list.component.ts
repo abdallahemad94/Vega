@@ -27,7 +27,7 @@ export class VehiclesListComponent implements OnInit {
     Observable.forkJoin(sources)
       .subscribe(
         ([vehicles]) => {
-          vehicles.forEach(v => v.lastUpdated = new Date(Date.parse(v.lastUpdated)));
+          vehicles.forEach(v => v.lastUpdated = new Date(new Date(v.lastUpdated).toLocaleDateString()));
           this.vehicles = vehicles;
           this.collectionView = new wjcCore.CollectionView(vehicles, { pageSize: this.pageSize });
         });

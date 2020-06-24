@@ -10,6 +10,7 @@
     <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <StartupObject>Vega.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

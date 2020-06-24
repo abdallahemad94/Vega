@@ -34,10 +34,10 @@
   </div>
   <div class="row">
     <div class="col-sm-2 col-md-2">
-      <a class="btn btn-warning text-white form-control" [routerLink]="['../../', 'edit', vehicle.id]">Edit</a>
+      <a class="btn btn-warning text-white form-control" [routerLink]="['../../', 'edit', vehicle.id]" [ngClass]="!auth.loggedIn ? 'disabled' : ''">Edit</a>
     </div>
     <div class="col-sm-2 col-md-2">
-      <button type="button" class="btn btn-danger text-white form-control " (click)="opensweetalert(vehicle.id)">Delete</button>
+      <button type="button" class="btn btn-danger text-white form-control " (click)="opensweetalert(vehicle.id)" [disabled]="!auth.loggedIn">Delete</button>
     </div>
     <div class="col-sm-2 col-md-2">
       <a class="btn btn-primary text-white form-control" [routerLink]="['../../']">Vehicles List</a>
@@ -49,18 +49,28 @@
 </div>
 
 <div class="tab-content mt-2" *ngIf="photsosTab">
-  <input type="file" (change)="addPhoto()" #fileInput/>
-  <br/>
+  <div class="input-group">
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" id="fileInput" #fileInput (change)="fileInputChange()">
+      <label class="custom-file-label" for="fileInput">{{fileInput.value}}</label>
+    </div>
+    <div class="input-group-append">
+      <button class="btn btn-outline-info" type="button" [disabled]="!fileInput.value" (click)="uploadPhoto()">
+        <fa-icon [icon]="faUpload"></fa-icon> Upload
+      </button>
+    </div>
+  </div>
+  <br />
   <div class="progress" *ngIf="progress && progress.percentage > 0 && progress.percentage < 100">
     <div class="progress-bar progress-bar-striped progress-bar-animated" [style.width]="progress.percentage + '%'">
       <span>{{progress.percentage + '% Completed'}}</span>
       <span class="sr-only">{{progress.percentage + '% Completed'}}</span>
     </div>
   </div>
-  <br/>
+  <br />
   <div class="row m-1 mt-3 photos">
     <div class="col-12 col-md-12 col-sm-12" *ngIf="photos && photos.length > 0">
-      <img src="/Photos/{{img.fileName}}" alt="" *ngFor="let img of photos" class="img-thumbnail m-1 photo"/>
+      <img src="/Photos/{{img.fileName}}" alt="" *ngFor="let img of photos" class="img-thumbnail m-1" />
     </div>
   </div>
 </div>

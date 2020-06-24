@@ -16,11 +16,12 @@ export class AppErrorHandler implements ErrorHandler {
   handleError(error: any): void {
     this.ngZone.run(() => {
       const toastOptions: ToastOptions = new ToastOptions();
-      toastOptions.title = `${error.rejection.name}: ${error.rejection.status}`;
-      toastOptions.msg = error.rejection.error;
+      toastOptions.title = `${error.rejection?.name || error.name}: ${error.rejection?.status || error.status}`;
+      toastOptions.msg = error.rejection?.error || error?.error || error.message;
       toastOptions.showClose = true;
       toastOptions.theme = "bootstrap";
       this.toastService.error(toastOptions);
+      console.error(error);
       if (!isDevMode())
       {
         const eventId = Sentry.captureException(error.originalError || error);
