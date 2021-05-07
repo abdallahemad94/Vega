@@ -45,7 +45,7 @@
     "rxjs": "6.3.3",
     "rxjs-compat": "^6.5.5",
     "sweetalert2": "^9.10.13",
-    "underscore": "^1.10.2",
+    "underscore": "^1.12.1",
     "webpack": "^4.43.0",
     "wijmo": "^5.20201.676-rc",
     "zone.js": "^0.8.29"
