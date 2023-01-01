@@ -13,7 +13,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-devkit/build-angular": "^0.13.10",
+    "@angular-devkit/build-angular": "^15.0.4",
     "@angular/animations": "^6.1.10",
     "@angular/common": "6.1.10",
     "@angular/compiler": "6.1.10",
@@ -46,7 +46,7 @@
     "rxjs-compat": "^6.5.5",
     "sweetalert2": "^9.10.13",
     "underscore": "^1.10.2",
-    "webpack": "^4.43.0",
+    "webpack": "^5.75.0",
     "wijmo": "^5.20201.676-rc",
     "zone.js": "^0.8.29"
   },
